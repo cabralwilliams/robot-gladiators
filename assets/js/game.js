@@ -8,10 +8,11 @@ console.log(playerName, playerAttack, playerHealth);
 
 var enemyNames = ["Omega Supreme","Superion","Defensor","Computron","Omega Prime"];
 var enemyHealth = 50;
+var maxEnemyHealth = 50;
 var enemyAttack = 12;
 
 // Alert players that they are starting the round
-window.alert("Welcome to Robot Gladiators!");
+//window.alert("Welcome to Robot Gladiators!");
 
 var fight = function(enemyName) {
     //Let player choose his/her action
@@ -31,7 +32,7 @@ var fight = function(enemyName) {
         
         //Log enemy's status
         if (enemyHealth <= 0) {
-            //window.alert(enemyName + " has died!");
+            window.alert(enemyName + " has died!");
             console.log(enemyName + " has died!");
         } 
         else {
@@ -45,8 +46,8 @@ var fight = function(enemyName) {
 
             // check player's health
             if (playerHealth <= 0) {
-                //window.alert(playerName + " has died!");
-                console.log(playerName + " has died!");
+                window.alert(playerName + " has fallen in battle!  Gameover!");
+                console.log(playerName + " has fallen in battle!  Gameover!");
             } else {
                 //window.alert(playerName + " still has " + playerHealth + " health left.");
                 console.log(playerName + " still has " + playerHealth + " health left.");
@@ -59,7 +60,7 @@ var fight = function(enemyName) {
         var reallySkip = window.confirm("Do you really want to skip the fight?");
         if(reallySkip) {
             playerMoney -= 10;
-            //window.alert(playerName + " has skipped the fight and is a total loser.  " + playerName + " has " + playerMoney + " money remaining.");
+            window.alert(playerName + " has skipped the fight and is a total loser.  " + playerName + " has " + playerMoney + " money remaining.");
             console.log(playerName + " has skipped the fight and is a total loser.  " + playerName + " has " + playerMoney + " money remaining.");
         } else {
             fight(enemyName);
@@ -77,6 +78,9 @@ var enemyIndex = 0;
 var didSkip = false;
 var startingMoney = playerMoney;
 while(enemyIndex < enemyNames.length && playerHealth > 0 && playerMoney > 0) {
+    if(enemyHealth === maxEnemyHealth) {
+        window.alert("Welcome to Robot Galdiators!\nRound: " + (enemyIndex + 1));
+    }
     fight(enemyNames[enemyIndex]);
     if(playerMoney < startingMoney) {
         didSkip = true;
@@ -85,7 +89,9 @@ while(enemyIndex < enemyNames.length && playerHealth > 0 && playerMoney > 0) {
     if(enemyHealth <= 0 || didSkip) {
         enemyIndex++;
         enemyHealth = 50;
-        startingMoney -= 10;
+        if(didSkip) {
+            startingMoney -= 10;
+        }
         didSkip = false;
     }
 }
